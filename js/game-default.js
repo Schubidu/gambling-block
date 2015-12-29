@@ -117,7 +117,7 @@
 
             tds.each(function (i) {
                 $(this).text('');
-                $(this).append($('<input type="text" pattern="[0-9]*"  maxlength="' + maxLength + '" data-player="' + i + '" name="player-' + i + '" />'));
+                $(this).append($('<input type="number" maxlength="' + maxLength + '" data-player="' + i + '" name="player-' + i + '" />'));
                 if (i == 0) {
                     $(this).focus();
                 }
