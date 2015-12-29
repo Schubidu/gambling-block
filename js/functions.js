@@ -115,7 +115,7 @@
 			var p = $('p:last', nGameForm);
 			if (playerIndex <= 5) {
 				var playerName = 'Player ' + (playerIndex + 1);
-				var pl = '<p><label for="player-' + playerIndex + '">' + playerName + '</label><input type="text" placeholder="' + playerName + '" id="player-' + playerIndex + '" name="player" /></p>';
+				var pl = '<p class="pure-control-group"><label for="player-' + playerIndex + '">' + playerName + '</label><input type="text" placeholder="' + playerName + '" id="player-' + playerIndex + '" name="player" /></p>';
 				p.after(pl);
 			}
 			playerIndex++;

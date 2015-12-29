@@ -1,38 +1,44 @@
 <!doctype html>
 <html lang="en" class="no-js" manifest="app.manifest">
 <head>
-	<meta charset="UTF-8">
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<meta name="viewport" content="width=device-width; initial-scale=1.0;" />
-	<meta name="apple-touch-fullscreen" content="yes" />
-	<title>Spielblock</title>
-	<link rel="stylesheet" type="text/css" href="css/main.css" />
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/game-default.js"></script>
-	<script type="text/javascript" src="js/functions.js"></script>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <title>Spielblock</title>
+    <link rel="stylesheet" href="//cdn.rawgit.com/yahoo/pure-release/v0.6.0/pure-min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/game-default.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
 <noscript>
-	<p>Please activate Javascript!</p>
+    <p>Please activate Javascript!</p>
 </noscript>
-<form id="newGame">
-	<fieldset>
-		<legend>New Game</legend>
+<form class="pure-form pure-form-aligned" id="newGame">
+    <fieldset>
+        <legend>New Game</legend>
 
-		<p><label for="gameSelect">Select Game </label><select id="gameSelect" name="game">
+        <p class="pure-control-group"><label for="gameSelect">Select Game </label><select id="gameSelect" name="game">
 
-		</select></p>
-
-		<button name='addPlayer'>Add Player</button>
-		<button name='play'>Play</button>
-
-	</fieldset>
+        </select></p>
+        <div class="pure-controls">
+            <button class="pure-button button-secondary" name='addPlayer'><i class="fa fa-plus"></i> Add Player</button>
+        </div>
+        <div class="pure-controls">
+            <button class="pure-button button-xlarge button-success" name='play'><i class="fa fa-play"></i> Play</button>
+        </div>
+    </fieldset>
 </form>
-<div id="currentGame">
-	<button type="button" name="save">save</button>
-	<button type="button" name="close">close</button>
-	<div></div>
-</div>
+<section class="game" id="currentGame">
+    <header class="game-header">
+        <button class="pure-button button-secondary" type="button" name="save">save</button>
+        <button class="pure-button button-error" type="button" name="close"><i class="fa fa-close fa-lg" title="close"></i></button>
+    </header>
+    <div></div>
+</section>
 </body>
 </html>

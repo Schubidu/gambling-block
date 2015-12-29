@@ -1,41 +1,100 @@
 body {
-	margin: 0;
+    margin: 0;
 }
 
 * {
-	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
 table input {
-	width: 3em;
+}
+
+.pure-table input {
+    display: block;
+    text-align: right;
+    margin: 0 -.6em;
+    width: 5em;
+}
+
+.pure-table td {
+    text-align: right;
 }
 
 .no-js form, .no-js div {
-	display: none;
+    display: none;
 }
 
 button, input, select {
-	font-size: 1em;
+    font-size: 1em;
 }
 
-@media all and (max-width: 350px) {
+.button-xlarge {
+    font-size: 125%;
+}
 
-	/* Allgemein */
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
 
-	body {
-		font-size: 24px;
-		line-height: 1.2;
-	}
+.button-success {
+    background: rgb(28, 184, 65); /* this is a green */
+}
 
-	#newGame label {
-		display: none;
-	}
+.button-error {
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
 
-	#newGame fieldset {
-		margin: 0;
-		padding: 10px 5px;
-		border: 0;
+.button-warning {
+    background: rgb(223, 117, 20); /* this is an orange */
+}
 
-	}
+.button-secondary {
+    background: rgb(66, 184, 221); /* this is a light blue */
+}
 
+.pure-table {
+    table-layout: fixed;
+}
+
+/*game */
+.game {
+    position: relative;
+    width: 100vw;
+    padding-top: 3em;
+
+}
+
+.game > div {
+    padding: .5em .6em;
+}
+
+.game table {
+    max-width: 100%;
+}
+
+.game-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+}
+
+.game-header button {
+    flex: auto;
+    margin: .5em .6em;
+}
+
+.game-header button:last-child {
+    align-self: flex-end;
+    flex: none;
+    display: flex;
+    align-items: center;
+}
+
+.game-header {
 }
