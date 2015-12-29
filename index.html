@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" class="no-js" manifest="app.manifest">
+<head>
+	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=device-width; initial-scale=1.0;" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<title>Spielblock</title>
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/game-default.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+</head>
+<body>
+<noscript>
+	<p>Please activate Javascript!</p>
+</noscript>
+<form id="newGame">
+	<fieldset>
+		<legend>New Game</legend>
+
+		<p><label for="gameSelect">Select Game </label><select id="gameSelect" name="game">
+
+		</select></p>
+
+		<button name='addPlayer'>Add Player</button>
+		<button name='play'>Play</button>
+
+	</fieldset>
+</form>
+<div id="currentGame">
+	<button type="button" name="save">save</button>
+	<button type="button" name="close">close</button>
+	<div></div>
+</div>
+</body>
+</html>

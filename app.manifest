@@ -1,0 +1,16 @@
+CACHE MANIFEST
+
+# Offline cache v5
+# html files
+index.html
+
+# css files
+css/main.css
+
+# js files
+js/functions.js
+js/game-defaults.js
+js/jquery.min.js
+
+# images
+#assets/ico_ninja-star.gif

@@ -1,0 +1,41 @@
+body {
+	margin: 0;
+}
+
+* {
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+table input {
+	width: 3em;
+}
+
+.no-js form, .no-js div {
+	display: none;
+}
+
+button, input, select {
+	font-size: 1em;
+}
+
+@media all and (max-width: 350px) {
+
+	/* Allgemein */
+
+	body {
+		font-size: 24px;
+		line-height: 1.2;
+	}
+
+	#newGame label {
+		display: none;
+	}
+
+	#newGame fieldset {
+		margin: 0;
+		padding: 10px 5px;
+		border: 0;
+
+	}
+
+}
