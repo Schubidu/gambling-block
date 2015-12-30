@@ -8,234 +8,253 @@
 
 
 (function ($) {
-	var STORAGE_TEMP_KEY = 'spielblock.game';
-	var STORAGE_SAVE_KEY = 'spielblock.game.save';
-	if ($ == null) {
-		return;
-	}
+    var STORAGE_TEMP_KEY = 'gamblingblock.game';
+    var STORAGE_SAVE_KEY = 'gamblingblock.game.save';
+    if ($ == null) {
+        return;
+    }
 
-	var Storage = function(key){
-		this.key = key;
-	};
-	Storage.prototype.get = function(){
-		return JSON.parse(localStorage.getItem(this.key));
-	};
+    var Storage = function (key) {
+        this.key = key;
+    };
+    Storage.prototype = {
+        get: function () {
+            return JSON.parse(localStorage.getItem(this.key));
+        },
+        set: function (value) {
+            localStorage.setItem(this.key, JSON.stringify(value));
+            return this;
+        },
+        remove: function () {
+            localStorage.removeItem(this.key);
+            return this;
+        }
+    };
 
-	Storage.prototype.set = function(value){
-		localStorage.setItem(this.key, JSON.stringify(value));
-		return this;
-	};
+    function SaveStorage(a) {
+        Storage.call(this, a);
+    }
 
-	Storage.prototype.remove = function(){
-		localStorage.removeItem(this.key);
-		return this;
-	};
+    SaveStorage.prototype = Object.create(Storage.prototype, {
+        get: {
+            value: function () {
+                var g = Storage.prototype.get.apply(this, arguments);
+                if (!$.isArray(g)) {
+                    g = [];
+                }
+                return g;
+            },
+            enumerable: true,
+            configurable: true,
+            writable: true
+        },
+        push: {
+            value: function (value) {
+                var storage = this.get();
+                if (storage === null) {
+                    storage = [];
+                }
+                if ($.isArray(storage)) {
+                    storage.push(value);
+                }
+                this.set(storage);
+                return this;
+            },
+            enumerable: true,
+            configurable: true,
+            writable: true
+        },
+        getByIndex: {
+            value: function (index) {
+                var storage = this.get();
+                return storage[index];
+            },
+            enumerable: true,
+            configurable: true,
+            writable: true
+        },
+        removeByIndex: {
+            value: function (index) {
+                var storage = this.get();
+                var temp = [];
+                for (var i = 0; i < storage.length; i++) {
+                    if (i !== index) {
+                        temp.push(storage[i]);
+                    }
+                }
+                this.set(temp);
+                return temp;
+            },
+            enumerable: true,
+            configurable: true,
+            writable: true
+        },
+        setByIndex: {
+            value: function (index, value) {
+                var storage = this.get();
+                storage[index] = value;
+                this.set(storage);
+                return storage;
+            },
+            enumerable: true,
+            configurable: true,
+            writable: true
+        }
+    });
 
-	var SaveStorage = function(){
+    SaveStorage.prototype.constructor = SaveStorage;
 
-	};
+    $(function () {
+        var tempStorage = new Storage(STORAGE_TEMP_KEY);
+        var saveStorage = new SaveStorage(STORAGE_SAVE_KEY);
 
-	SaveStorage.prototype = new Storage;
+        $('html').removeClass('no-js').addClass('js');
 
-	SaveStorage.prototype.get = function(){
-		var g = Storage.prototype.get.call(this);
-		if(!$.isArray(g)){
-			g = [];
-		}
-		return g;
-	};
+        var storeChanges = null;
+        $('body').on('game.changed', function () {
+            clearTimeout(storeChanges);
+            storeChanges = setTimeout(function () {
+                var serObj = {
+                    name: $(gameSelect).val(),
+                    items: game.serialize()
+                };
+                tempStorage.set(serObj);
+                //localStorage.setItem(STORAGE_TEMP_KEY, JSON.stringify(serObj));
+            }, 100);
+        });
 
-	SaveStorage.prototype.push = function(value){
-		var storage = this.get();
-		if(storage === null){
-			storage = [];
-		}
-		if($.isArray(storage)){
-			storage.push(value);
-		}
-		this.set(storage);
-		return this;
-	};
+        var newGame = $('#newGame');
+        var currentGame = $('#currentGame').hide();
+        var savedGames = $([]);
+        var playerIndex = 0,
+            games = [],
+            game;
 
-	SaveStorage.prototype.getByIndex = function(index){
-		var storage = this.get();
-		return storage[index];
-	};
+        function addPlayer() {
+            var p = $('p:last', nGameForm);
+            if (playerIndex <= 5) {
+                var playerName = 'Player ' + (playerIndex + 1);
+                var pl = '<p class="pure-control-group"><label for="player-' + playerIndex + '">' + playerName + '</label><input type="text" placeholder="' + playerName + '" id="player-' + playerIndex + '" name="player" /></p>';
+                p.after(pl);
+            }
+            playerIndex++;
+            if (playerIndex > 5) {
+                $('button[name=addPlayer]', nGameForm).hide();
+            }
+        }
 
-	SaveStorage.prototype.removeByIndex = function(index){
-		var storage = this.get();
-		var temp = [];
-		for (var i = 0; i < storage.length; i++){
-			if(i !== index){
-				temp.push(storage[i]);
-			}
-		}
-		this.set(temp);
-		return temp;
-	};
+        function removePlayer() {
 
-	SaveStorage.prototype.setByIndex = function(index, value){
-		var storage = this.get();
-		storage[index] = value;
-		this.set(storage);
-		return storage;
-	};
+        }
 
+        var nGameForm = $('#newGame');
+        var gameSelect = $('#gameSelect', nGameForm)[0];
 
+        for (var obj in Games) {
+            gameSelect.options[gameSelect.options.length] = new Option(obj, obj, false, false);
+        }
 
+        addPlayer();
+        addPlayer();
 
+        $('button[name=addPlayer]').on('click', addPlayer);
+        $('button[name=play]').on('click', function (event) {
+            event.preventDefault();
+            var players = [],
+                player = 1,
+                g = '',
+                formValues = nGameForm.serializeArray();
+            for (obj in formValues) {
+                obj = formValues[obj];
+                if (obj.name == 'player') {
+                    if (obj.value == '') {
+                        players.push('Player ' + player);
+                    } else {
+                        players.push(obj.value);
+                    }
+                    player++;
+                }
+                if (obj.name == 'game') {
+                    g = obj.value;
+                }
+            }
 
-	$(function () {
-		var tempStorage = new Storage(STORAGE_TEMP_KEY);
-		var saveStorage = new SaveStorage(STORAGE_SAVE_KEY);
+            newGame.hide();
+            savedGames.hide();
+            currentGame.show();
+            game = new Games[g]($('div', currentGame), {players: players});
 
-		$('html').removeClass('no-js').addClass('js');
+        });
 
-		var storeChanges = null;
-		$('body').on('game.changed', function () {
-			clearTimeout(storeChanges);
-			storeChanges = setTimeout(function () {
-				var serObj = {
-					name:$(gameSelect).val(),
-					items:game.serialize()
-				};
-				tempStorage.set(serObj);
-				//localStorage.setItem(STORAGE_TEMP_KEY, JSON.stringify(serObj));
-			}, 100);
-		});
+        $('button[name=save]').on('click', function (event) {
+            event.preventDefault();
+            var title = prompt("Please name the game", game.id);
+            var serObj = {
+                name: $(gameSelect).val(),
+                items: game.serialize(),
+                title: title
+            };
+            saveStorage.push(serObj);
+        });
 
-		var newGame = $('#newGame');
-		var currentGame = $('#currentGame').hide();
-		var savedGames = $([]);
-		var playerIndex = 0,
-				games = [],
-				game;
+        $('button[name=close]').on('click', function () {
+            var serGame = game.serialize();
+            currentGame.find('div').remove();
+            currentGame.append('<div/>').hide();
+            newGame.show();
+            savedGames.show();
+            clearTimeout(storeChanges);
+            localStorage.removeItem(STORAGE_TEMP_KEY);
+            showSavedGames();
 
-		function addPlayer() {
-			var p = $('p:last', nGameForm);
-			if (playerIndex <= 5) {
-				var playerName = 'Player ' + (playerIndex + 1);
-				var pl = '<p class="pure-control-group"><label for="player-' + playerIndex + '">' + playerName + '</label><input type="text" placeholder="' + playerName + '" id="player-' + playerIndex + '" name="player" /></p>';
-				p.after(pl);
-			}
-			playerIndex++;
-			if (playerIndex > 5) {
-				$('button[name=addPlayer]', nGameForm).hide();
-			}
-		}
+        });
 
-		function removePlayer() {
-
-		}
-
-		var nGameForm = $('#newGame');
-		var gameSelect = $('#gameSelect', nGameForm)[0];
-
-		for (var obj in Games) {
-			gameSelect.options[gameSelect.options.length] = new Option(obj, obj, false, false);
-		}
-
-		addPlayer();
-		addPlayer();
-
-		$('button[name=addPlayer]').on('click', addPlayer);
-		$('button[name=play]').on('click', function (event) {
-			event.preventDefault();
-			var players = [],
-					player = 1,
-					g = '',
-					formValues = nGameForm.serializeArray();
-			for (obj in formValues) {
-				obj = formValues[obj];
-				if (obj.name == 'player') {
-					if (obj.value == '') {
-						players.push('Player ' + player);
-					} else {
-						players.push(obj.value);
-					}
-					player++;
-				}
-				if (obj.name == 'game') {
-					g = obj.value;
-				}
-			}
-
-			newGame.hide();
-			savedGames.hide();
-			currentGame.show();
-			game = new Games[g]($('div', currentGame), {players:players});
-
-		});
-
-		$('button[name=save]').on('click', function (event) {
-			event.preventDefault();
-			var title = prompt("Please name the game", game.id);
-			var serObj = {
-				name:$(gameSelect).val(),
-				items:game.serialize(),
-				title: title
-			};
-			saveStorage.push(serObj);
-		});
-
-		$('button[name=close]').on('click', function () {
-			var serGame = game.serialize();
-			currentGame.find('div').remove();
-			currentGame.append('<div/>').hide();
-			newGame.show();
-			savedGames.show();
-			clearTimeout(storeChanges);
-			localStorage.removeItem(STORAGE_TEMP_KEY);
-			showSavedGames();
-
-		});
-
-		function showSavedGames(){
-			var games = saveStorage.get();
-			var lis = '';
-			$.each(games, function(i, o){
-				lis+='<li><a href="javascript:void(0)" data-type="open" data-index="' + i + '">' + o.title + '</a><ul><li><a href="javascript:void(0)"  data-type="delete" data-index="' + i + '">Delete</a></li></ul></li>'
-			});
-			if(!!savedGames.size()){
-				savedGames.remove();
-			}
-			if(lis !== ''){
-				savedGames = $('<section id="savedGames"><h1>Saved Games</h1><ul>' + lis + '</ul></section>');
-				newGame.before(savedGames);
-			}
-		}
-
-
-		$(document).on('click', '#savedGames a[data-type=open]', function(){
-			var $t = $(this);
-			var index = $t.data('index');
-			storageGameItem = saveStorage.getByIndex(index);
-			newGame.hide();
-			savedGames.hide();
-			currentGame.show();
-			game = new Games[storageGameItem.name]($('div', currentGame), storageGameItem.items);
-		});
-
-		$(document).on('click', '#savedGames a[data-type=delete]', function(){
-			saveStorage.removeByIndex($(this).data('index'));
-			showSavedGames();
-		});
-
-
-		var storageGameItem = tempStorage.get();
-		if ($.isPlainObject(storageGameItem)) {
-			newGame.hide();
-			currentGame.show();
-			game = new Games[storageGameItem.name]($('div', currentGame), storageGameItem.items);
-		} else {
-			showSavedGames();
-		}
+        function showSavedGames() {
+            var games = saveStorage.get();
+            var lis = '';
+            $.each(games, function (i, o) {
+                lis += '<li><a href="javascript:void(0)" data-type="open" data-index="' + i + '">' + o.title + '</a><ul><li><a href="javascript:void(0)"  data-type="delete" data-index="' + i + '">Delete</a></li></ul></li>'
+            });
+            if (!!savedGames.size()) {
+                savedGames.remove();
+            }
+            if (lis !== '') {
+                savedGames = $('<section id="savedGames"><h1>Saved Games</h1><ul>' + lis + '</ul></section>');
+                newGame.before(savedGames);
+            }
+        }
 
 
-		nGameForm.submit(function () {
-			return false;
-		})
-	})
+        $(document).on('click', '#savedGames a[data-type=open]', function () {
+            var $t = $(this);
+            var index = $t.data('index');
+            storageGameItem = saveStorage.getByIndex(index);
+            newGame.hide();
+            savedGames.hide();
+            currentGame.show();
+            game = new Games[storageGameItem.name]($('div', currentGame), storageGameItem.items);
+        });
+
+        $(document).on('click', '#savedGames a[data-type=delete]', function () {
+            saveStorage.removeByIndex($(this).data('index'));
+            showSavedGames();
+        });
+
+
+        var storageGameItem = tempStorage.get();
+        if ($.isPlainObject(storageGameItem)) {
+            newGame.hide();
+            currentGame.show();
+            game = new Games[storageGameItem.name]($('div', currentGame), storageGameItem.items);
+        } else {
+            showSavedGames();
+        }
+
+
+        nGameForm.submit(function () {
+            return false;
+        })
+    })
 
 
 })(jQuery);
