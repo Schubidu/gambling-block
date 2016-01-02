@@ -133,7 +133,7 @@
         };
 
         var create = function (parent, obj) {
-            var tab, nt = '<form autocomplete="off" class="pure-form pure-form-aligned"><table class="pure-table"><thead><tr><th>Spiel</th>';
+            var tab, nt = '<form autocomplete="off" class="pure-form pure-form-aligned"><table class="pure-table"><thead><tr><th>Round</th>';
             $.each(obj.players, function (i, player) {
                 nt += '<th>' + player + '</th>';
             });
@@ -144,7 +144,7 @@
             });
 
             nt += '</tr>';
-            nt += '<tr><th>Gesamt</th>';
+            nt += '<tr><th>Result</th>';
 
             $.each(obj.players, function () {
                 nt += '<td>0</td>';
