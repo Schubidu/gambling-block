@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-left: .5em;
+}
+.place {
+  display: block;
+}
+
+.data {
+  display: block;
+  text-align: right;
+}

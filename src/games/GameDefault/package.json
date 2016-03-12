@@ -1,0 +1,12 @@
+{
+  "name": "GameDefault",
+  "version": "1.0.0",
+  "description": "Default game for the gambling block",
+  "main": "GameDefault.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Stefan Schult <stefan@schult.mobi>",
+  "license": "MIT"
+}
