@@ -1,10 +1,12 @@
 .normal {
-  padding: 0;
   border: 0;
-  font-weight: 500;
+  font-weight: 100;
+  padding: 6px 12px;
+  background-color: rgba(138, 219, 255, .3);
+}
 
-  &[type=number] {
-    @extend .normal;
-    text-align: right;
-  }
+.number {
+  @extend .normal;
+  text-align: right;
+  width: 90px;
 }

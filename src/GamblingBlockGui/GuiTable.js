@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import styles from './GuiTable.scss';
 
 export default class GuiTable extends Component {
   static propTypes = {
@@ -6,7 +7,7 @@ export default class GuiTable extends Component {
   };
 
   render() {
-    return (<table>{this.props.children}</table>);
+    return (<table className={styles.guiTable} >{this.props.children}</table>);
   }
 
 }

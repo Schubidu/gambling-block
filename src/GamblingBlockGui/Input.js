@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import styles from './Input.scss';
 
+const InputTypeNumber = 'number';
+
 export default class Input extends Component {
   static propTypes = {
     value: PropTypes.any,
@@ -10,7 +12,7 @@ export default class Input extends Component {
   };
 
   static defaultProps = {
-    type: 'number'
+    type: InputTypeNumber
   };
 
   handleFocus(event) {
@@ -22,7 +24,7 @@ export default class Input extends Component {
   }
 
   render() {
-    return <input className={styles.normal} type={this.props.type} defaultValue={this.props.value} {...this.state} onFocus={this.handleFocus} onChange={this.handleChange.bind(this)}/>;
+    return <input className={(this.props.type === InputTypeNumber) ? styles.number : styles.normal} type={this.props.type} defaultValue={this.props.value} {...this.state} onFocus={this.handleFocus} onChange={this.handleChange.bind(this)}/>;
   }
 
 }

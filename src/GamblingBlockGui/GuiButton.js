@@ -7,7 +7,7 @@ export default class GuiButton extends Component {
   };
 
   render() {
-    return (<buttonx {...this.props}>{this.props.children}</buttonx>);
+    return (<button {...this.props}>{this.props.children}</button>);
   }
 
 }

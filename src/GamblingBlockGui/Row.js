@@ -1,4 +1,5 @@
 import React, { Component, PropTypes, Children, cloneElement } from 'react';
+import styles from './Row.css';
 
 export default class Row extends Component {
   static propTypes = {
@@ -18,11 +19,11 @@ export default class Row extends Component {
 
   render() {
     let cols = this.props.cols.map((col, idx) => {
-      return <td key={idx}>{this.renderValue(idx, col)}</td>;
+      return <td className={styles.col} key={idx}>{this.renderValue(idx, col)}</td>;
     });
 
     return <tr>
-      <th>{this.props.title}</th>
+      <th className={styles.head}>{this.props.title}</th>
       {cols}
     </tr>;
   }
