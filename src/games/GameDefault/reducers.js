@@ -4,7 +4,7 @@ import { DEFAULT_INIT, DEFAULT_ADD, DEFAULT_EDIT, DEFAULT_RULES } from './action
 const initialState = {
   rounds: [],
   rules: {
-    highestWins: true,
+    highestWins: false,
     target: 1000
   }
 };
