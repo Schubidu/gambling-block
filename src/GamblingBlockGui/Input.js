@@ -7,6 +7,7 @@ const InputTypeText = 'text';
 export default class Input extends Component {
   static propTypes = {
     value: PropTypes.any,
+    defaultValue: PropTypes.any,
     player: PropTypes.number,
     type: React.PropTypes.oneOf([InputTypeText, InputTypeNumber]),
     onChange: PropTypes.func
@@ -17,7 +18,11 @@ export default class Input extends Component {
   };
 
   handleFocus(event) {
+    const t = event.target;
     event.target.select();
+    setTimeout(() => {
+      t.setSelectionRange(0, 9999);
+    }, 1);
   }
 
   handleChange(event) {
@@ -25,7 +30,7 @@ export default class Input extends Component {
   }
 
   render() {
-    return <input className={(this.props.type === InputTypeNumber) ? styles.number : styles.normal} type={this.props.type} defaultValue={this.props.value} {...this.state} onFocus={this.handleFocus.bind(this)} onChange={this.handleChange.bind(this)}/>;
+    return <input className={(this.props.type === InputTypeNumber) ? styles.number : styles.normal} type={this.props.type} {...this.props} {...this.state} onFocus={this.handleFocus.bind(this)} onChange={this.handleChange.bind(this)}/>;
   }
 
 }
