@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class GuiTableFooter extends Component {
+export default class TableBody extends Component {
   static propTypes = {
     children: PropTypes.any
   };
 
   render() {
-    return (<tfoot>{this.props.children}</tfoot>);
+    return (<tbody>{this.props.children}</tbody>);
   }
 
 }

@@ -1,13 +1,15 @@
-import GuiButton from './GuiButton';
-import GuiTable from './GuiTable';
-import GuiTableBody from './GuiTableBody';
-import GuiTableFooter from './GuiTableFooter';
-import GuiTableHeader from './GuiTableHeader';
+import Button from './Button';
+import Heading from './Heading';
+import Table from './Table';
+import TableBody from './TableBody';
+import TableFooter from './TableFooter';
+import TableHeader from './TableHeader';
 
-import GuiInput from './Input';
-import GuiRow from './Row';
-import GuiSummary from './Summary';
-import GuiText from './Text';
-import GuiWrapper from './Wrapper';
+import Input from './Input';
+import Row from './Row';
+import Settings from './Settings';
+import Summary from './Summary';
+import Text from './Text';
+import Wrapper from './Wrapper';
 
-export default { GuiButton, GuiTable, GuiTableBody, GuiTableFooter, GuiTableHeader, GuiInput, GuiRow, GuiSummary, GuiText, GuiWrapper };
+export default { Button, Heading, Table, TableBody, TableFooter, TableHeader, Input, Row, Settings, Summary, Text, Wrapper };

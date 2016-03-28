@@ -1,5 +1,6 @@
 @import 'base';
 @import 'vendor/normalize';
+@import 'font';
 
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
@@ -12,6 +13,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: system;
 }
 
 *,
@@ -22,10 +24,10 @@ body {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 input[type=number] {
-    -moz-appearance:textfield;
+  -moz-appearance: textfield;
 }

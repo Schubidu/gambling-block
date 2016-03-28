@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import { GuiButton, GuiTable, GuiTableBody, GuiTableFooter, GuiTableHeader, GuiInput, GuiRow, GuiSummary, GuiText, GuiWrapper } from '../../GamblingBlockGui';
 import { connect } from 'react-redux';
+import * as Gui from '../../GamblingBlockGui';
 import * as actions from './actions';
 
 export default class GameDefault extends Component {
   static propTypes = {
     players: PropTypes.arrayOf(PropTypes.string),
     rounds: PropTypes.arrayOf(PropTypes.array),
-    settings: PropTypes.object,
+    settings: React.PropTypes.shape({
+      highestWins: React.PropTypes.bool,
+      target: React.PropTypes.number
+    }),
     init: PropTypes.func.isRequired,
     add: PropTypes.func.isRequired,
     edit: PropTypes.func.isRequired
@@ -50,29 +53,30 @@ export default class GameDefault extends Component {
     });
 
     const rows = rounds.map((round, idx) => {
-      return (<GuiRow key={idx} title={idx + 1} cols={round}>
-        <GuiInput onChange={this.onEditRound.bind(this, idx)}/>
-      </GuiRow>);
+      return (<Gui.Row key={idx} title={idx + 1} cols={round}>
+        <Gui.Input onChange={this.onEditRound.bind(this, idx)}/>
+      </Gui.Row>);
     });
 
-    return (<GuiWrapper>
-      <GuiTable>
-        <GuiTableHeader>
-          <GuiRow key='header' title='Rounds' cols={players}>
-            <GuiText/>
-          </GuiRow>
-        </GuiTableHeader>
-        <GuiTableBody>
+    return (<Gui.Wrapper>
+      <Gui.Heading><Gui.Settings settings={GameDefault.propTypes.settings}/></Gui.Heading>
+      <Gui.Table>
+        <Gui.TableHeader>
+          <Gui.Row key='header' title='Rounds' cols={players}>
+            <Gui.Text/>
+          </Gui.Row>
+        </Gui.TableHeader>
+        <Gui.TableBody>
           {rows}
-        </GuiTableBody>
-        <GuiTableFooter>
-          <GuiRow key='summary' title='Summary' cols={summary}>
-            <GuiSummary sortedSummary={sortedSummary}/>
-          </GuiRow>
-        </GuiTableFooter>
-      </GuiTable>
-      <GuiButton onClick={this.onAddRound.bind(this, players.length)}>New Round</GuiButton>
-    </GuiWrapper>);
+        </Gui.TableBody>
+        <Gui.TableFooter>
+          <Gui.Row key='summary' title='Summary' cols={summary}>
+            <Gui.Summary sortedSummary={sortedSummary}/>
+          </Gui.Row>
+        </Gui.TableFooter>
+      </Gui.Table>
+      <Gui.Button onClick={this.onAddRound.bind(this, players.length)}>New Round</Gui.Button>
+    </Gui.Wrapper>);
   }
 };
 

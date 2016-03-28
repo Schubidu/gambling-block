@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { actions as playersActions } from '../redux/modules/players';
+import { actions as playersActions } from '../players/reducers';
 import Input from '../GamblingBlockGui/Input';
 import styles from './PlayersView.scss';
 

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class GuiButton extends Component {
+export default class Button extends Component {
   static propTypes = {
     children: PropTypes.any,
     onClick: PropTypes.func
