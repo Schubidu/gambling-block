@@ -36,7 +36,7 @@ export class PlayersView extends React.Component {
   }
 
   onAddPlayer() {
-    this.props.add();
+    this.props.add(`Player ${this.props.players.length + 1}`);
   }
 
   onChangePlayer(player, value) {
@@ -54,8 +54,8 @@ export class PlayersView extends React.Component {
     const renderedPlayers = (players && players.length) ? players.map(this.player.bind(this)) : null;
 
     return (<div><h2>Choose Player</h2>
-      {renderedPlayers}
       <button className={styles.button} onClick={this.onAddPlayer.bind(this)}>Add Player</button>
+      {renderedPlayers}
       <h2>Start Game</h2>
       {Object.keys(games).map((key) => {
         return (<Link key={key} to={'/game/' + key}>{key}</Link>);
